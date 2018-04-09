@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Neighborhood Map</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+  <div id="wrapper">
+
+    <!-- Top Navigation Bar -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
+      <a class="navbar-brand" href="#">Neighborhood Map</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
+        <!-- Filter input and button -->
+        <form class="form-inline" data-bind="submit: applyFilter">
+          <input id="filter" data-bind="value: placesFilter" class="form-control mr-sm-2" type="search" placeholder="Filter" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Filter</button>
+        </form>
+
+        <!-- Mobile controls only visibile on smaller screens -->
+        <ul class="navbar-nav mobile-controls">
+          <li class="nav-item active dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Select Place
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" data-bind="foreach: filteredPlaceList">
+              <a class="dropdown-item" data-bind="click: $parent.changeSelectedPlace, html: title, css: { selected: $data == $parent.selectedPlace() }" href="#"></a>
+            </div>
+          </li>
+        </ul>
+
+      </div>
+    </nav>
+
+    <!-- Filter menu on the left only visible on larger screens -->
+    <div id="menu">
+      <BR /><BR>
+      <ul class="nav flex-column" data-bind="foreach: filteredPlaceList">
+        <li class="nav-item" data-bind="css: { selected: $data == $parent.selectedPlace() }">
+          <a class="nav-link active" data-bind="click: $parent.changeSelectedPlace, html: title" href="#"></a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Map element -->
+    <div id="map">
+      <div id="map_warning">Google maps service could not be loaded. Please check the firewall or your network administrator.</div>
+    </div>
+
+  </div>
+
+  <script src="js/knockout-3.2.0.js"></script>
+  <script src="js/app.js"></script>
+
+  <script async defer
+   src="https://maps.googleapis.com/maps/api/js?v=3&libraries=places&key=ENTER_YOUR_API_KEY_HERE&callback=initMap">
+  </script>
+
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="js/jquery-3.2.1.js"></script>
+  <script src="js/popper.js"></script>
+  <script src="js/bootstrap.js"></script>
+</body>
+</html>
